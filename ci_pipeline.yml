@@ -10,7 +10,7 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-    vstsFeed: 'notguiri-feed'
+    vstsFeed: 'ntguiri'
     verbosityRestore: Minimal
     includeNuGetOrg: true
 
