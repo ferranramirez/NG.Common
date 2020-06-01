@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NG.Common.Business.BusinessExceptions;
+using NG.Common.Library.Exceptions;
 using System.Net;
 
-namespace NG.Common.Presentation.Filters
+namespace NG.Common.Library.Filters
 {
     public class ApiExceptionFilter : IExceptionFilter
     {
@@ -30,12 +31,28 @@ namespace NG.Common.Presentation.Filters
 
                 apiError.ErrorCode = ex.ErrorCode;
 
-                filterContext.HttpContext.Response.StatusCode = 543;
+                filterContext.HttpContext.Response.StatusCode = 330;
 
                 _logger.LogWarning(
                     new EventId(0),
                     ex,
                     $"Application thrown error: {ex.Message}");
+            }
+            else if (exception is DbUpdateException)
+            {
+                filterContext.Exception = null;
+
+                apiError.Message = exception.GetBaseException().Message;
+
+                apiError.ErrorCode = 900;
+
+                filterContext.HttpContext.Response.StatusCode = 331;
+
+                _logger.LogWarning(
+                    new EventId(0),
+                    exception,
+                    $"Database thrown error: {exception.Message}");
+
             }
             else
             {

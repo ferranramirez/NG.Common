@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace NG.Common.Presentation.Extensions
+namespace NG.Common.Library.Extensions
 {
     public static class JwtServiceExtensions
     {
@@ -13,7 +13,7 @@ namespace NG.Common.Presentation.Extensions
             IConfiguration secretsSection)
         {
             var authKey = secretsSection.GetValue<string>("AuthKey");
-
+            
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

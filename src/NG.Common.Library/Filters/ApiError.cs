@@ -1,4 +1,4 @@
-﻿namespace NG.Common.Presentation.Filters
+﻿namespace NG.Common.Library.Filters
 {
     public class ApiError
     {

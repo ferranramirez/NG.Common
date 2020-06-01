@@ -1,31 +1,31 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+using NG.Common.Services.Token;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace NG.Common.Presentation.Middleware
+namespace NG.Common.Library.Middleware
 {
     public class LogScopeMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ITokenService _tokenService;
         private readonly ILogger<LogScopeMiddleware> _logger;
 
         public LogScopeMiddleware(
             RequestDelegate next,
+            ITokenService tokenService,
             ILogger<LogScopeMiddleware> logger)
         {
             _next = next;
+            _tokenService = tokenService;
             _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            var tokenClaims = GetTokenClaims(context.Request.Headers["Authorization"]);
+            var tokenClaims = _tokenService.GetClaims(context.Request.Headers["Authorization"]);
             string email = tokenClaims.Any() ?
                     tokenClaims.First(c => string.Equals(c.Type, ClaimTypes.Email)).Value : "anonymous";
             string role = tokenClaims.Any() ?
@@ -36,20 +36,6 @@ namespace NG.Common.Presentation.Middleware
             {
                 await _next(context);
             }
-        }
-
-        private IEnumerable<Claim> GetTokenClaims(StringValues authorizationHeader)
-        {
-            if (authorizationHeader.Any())
-            {
-                var token = AuthenticationHeaderValue.Parse(authorizationHeader);
-
-                var handler = new JwtSecurityTokenHandler();
-                var tokenS = handler.ReadToken(token.Parameter) as JwtSecurityToken;
-
-                return tokenS.Claims;
-            }
-            return new List<Claim>();
         }
     }
 }

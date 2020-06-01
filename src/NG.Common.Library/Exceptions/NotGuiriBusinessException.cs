@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NG.Common.Business.BusinessExceptions
+namespace NG.Common.Library.Exceptions
 {
     public class NotGuiriBusinessException : Exception
     {

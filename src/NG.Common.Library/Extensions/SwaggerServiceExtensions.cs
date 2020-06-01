@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NG.Common.Presentation.Extensions
+namespace NG.Common.Library.Extensions
 {
     public static class SwaggerServiceExtensions
     {
