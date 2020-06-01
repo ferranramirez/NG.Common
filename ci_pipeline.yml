@@ -48,7 +48,13 @@ steps:
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
   inputs:
-    SymbolServerType: TeamServices
+    symbolsFolder: '$(Build.SourcesDirectory)'
+    searchPattern: '**/bin/**/*.pdb' 
+    indexSources: true
+    publishSymbols: true
+    symbolServerType: teamServices
+    detailedLog: true
+    symbolsArtifactName: 'Symbols_$(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Nuget Pack'
