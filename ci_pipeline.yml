@@ -10,8 +10,9 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-    vstsFeed: '9240442a-3711-4f02-9f45-c3c39ac103b6/99047d0d-24df-414b-8a33-123da0e4a76d'
+    vstsFeed: 'notguiri-feed'
     verbosityRestore: Minimal
+    includeNuGetOrg: true
 
 - task: DotNetCoreCLI@2
   displayName: Build
