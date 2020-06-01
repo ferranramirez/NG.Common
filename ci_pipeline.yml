@@ -18,7 +18,8 @@ steps:
   displayName: Build
   inputs:
     projects: '**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
+    configuration: $(BuildConfiguration)
+    arguments: '--no-restore'
 
 - powershell: |
    $branch = "$(Build.SourceBranchName)"
@@ -87,12 +88,13 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Nuget Pack'
   inputs:
-    command: pack
-    packagesToPack: '**/*.csproj;!**/*Test*.csproj'
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)/nuget'
     nobuild: true
     includesymbols: true
-
+    versioningScheme: 'off'
+    
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
