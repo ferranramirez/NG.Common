@@ -21,5 +21,10 @@ namespace NG.Common.Services.AuthorizationProvider
                 && Email.Equals(authorizedUser.Email)
                 && Role.Equals(authorizedUser.Role);
         }
+
+        public override int GetHashCode()
+        {
+            return new { UserId, Email, Role }.GetHashCode();
+        }
     }
 }
