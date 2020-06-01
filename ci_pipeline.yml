@@ -22,6 +22,7 @@ steps:
 
 - powershell: |
    $branch = "$(Build.SourceBranchName)"
+   
    if($branch -ne "master")
    {
        $workingDirectory = "$(System.DefaultWorkingDirectory)"
@@ -37,6 +38,32 @@ steps:
                    $fileVersion = $matches[1]
                    $newVersion = "$fileVersion-beta"
                    '[assembly: AssemblyVersion("{0}")]{1}[assembly: AssemblyInformationalVersion("{2}")]' -f $fileVersion,"`r`n",$newVersion 
+               } else {
+                   # Output line as is
+                   $_
+               }
+           } | Set-Content $path
+       }
+   
+       $filePattern = "**.csproj*"
+       $pattern1 ="<Version>"
+       $pattern2 ="</Version>"
+       $pattern = '(?={0})' -f $pattern1
+       $empty = ""
+   
+       Get-ChildItem -Path $workingDirectory -Recurse -Filter $filePattern | ForEach-Object {
+           $path = $_.FullName
+           Write-Host $path
+           (Get-Content $path) | ForEach-Object{
+               if($_ -match $pattern){
+                   # We have found the matching line
+                   # Edit the version number and put back.
+                   $fileVersion = $_
+                   $fileVersion = $fileVersion -replace $pattern1, $empty
+                   $fileVersion = $fileVersion -replace $pattern2, $empty
+                   $fileVersion = $fileVersion.Trim()
+                   $newVersion = "$fileVersion-beta"
+                   '<Version>{0}</Version>' -f $newVersion
                } else {
                    # Output line as is
                    $_
