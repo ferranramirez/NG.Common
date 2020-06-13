@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NG.Auth.Presentation.WebAPI
+namespace NG.Common.Library.Extensions
 {
     public static class HealthCheckExtensions
     {
