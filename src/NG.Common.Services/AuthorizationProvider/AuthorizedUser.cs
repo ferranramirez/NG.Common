@@ -4,9 +4,11 @@ namespace NG.Common.Services.AuthorizationProvider
 {
     public class AuthorizedUser
     {
-        public Guid UserId { get; }
-        public string Email { get; }
-        public string Role { get; }
+        public Guid UserId { get; set; }
+        public string Email { get; set; }
+        public string Role { get; set; }
+
+        public AuthorizedUser() { }
 
         public AuthorizedUser(Guid userId, string email, string role)
         {

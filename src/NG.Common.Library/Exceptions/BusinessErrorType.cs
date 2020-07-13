@@ -8,6 +8,7 @@
         CouponNotFound,
         WrongCommerce,
         AlreadyValidatedCoupon,
-        ExpiredCoupon
+        ExpiredCoupon,
+        WrongToken
     }
 }
