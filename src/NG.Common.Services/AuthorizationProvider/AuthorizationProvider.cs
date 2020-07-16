@@ -39,7 +39,7 @@ namespace NG.Common.Services.AuthorizationProvider
             var jwtSecurityToken = new JwtSecurityToken(
                 notBefore: DateTime.UtcNow,
                 claims: identity.Claims,
-                expires: DateTime.UtcNow.AddDays(1),
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
                 );
