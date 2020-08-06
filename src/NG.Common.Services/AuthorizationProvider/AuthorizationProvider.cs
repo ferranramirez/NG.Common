@@ -29,6 +29,7 @@ namespace NG.Common.Services.AuthorizationProvider
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
             identity.AddClaim(new Claim(ClaimTypes.Role, user.Role));
+            identity.AddClaim(new Claim("EmailConfirmed", user.EmailConfirmed.ToString()));
             return identity;
         }
 
