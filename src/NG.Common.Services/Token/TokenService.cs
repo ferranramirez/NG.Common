@@ -15,12 +15,16 @@ namespace NG.Common.Services.Token
             {
                 var token = AuthenticationHeaderValue.Parse(authorizationHeader);
 
-                var handler = new JwtSecurityTokenHandler();
-                var tokenS = handler.ReadToken(token.Parameter) as JwtSecurityToken;
+                var decodedToken = DecodeToken(token.Parameter);
 
-                return tokenS.Claims;
+                return decodedToken.Claims;
             }
             return new List<Claim>();
+        }
+
+        public JwtSecurityToken DecodeToken(string token)
+        {
+            return new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
         }
     }
 }
