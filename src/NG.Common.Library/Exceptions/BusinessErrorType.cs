@@ -9,6 +9,7 @@
         WrongCommerce,
         AlreadyValidatedCoupon,
         ExpiredCoupon,
-        WrongToken
+        WrongToken,
+        EmailNotConfirmed
     }
 }
