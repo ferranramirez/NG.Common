@@ -24,7 +24,7 @@ namespace NG.Common.Services.AuthorizationProvider
                 && UserId.Equals(authorizedUser.UserId)
                 && Email.Equals(authorizedUser.Email)
                 && Role.Equals(authorizedUser.Role)
-                && Role.Equals(authorizedUser.EmailConfirmed);
+                && EmailConfirmed.Equals(authorizedUser.EmailConfirmed);
         }
 
         public override int GetHashCode()
