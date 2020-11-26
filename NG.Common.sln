@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC3B844A-09E0-408C-A098-F8F40DB2023F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		master-pipeline.yml = master-pipeline.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1069AD1-4909-4CFE-83D2-E0ECBB387CC7}"
