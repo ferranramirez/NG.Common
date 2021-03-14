@@ -10,6 +10,7 @@
         AlreadyValidatedCoupon,
         ExpiredCoupon,
         WrongToken,
-        EmailNotConfirmed
+        EmailNotConfirmed,
+        WrongData
     }
 }
