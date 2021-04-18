@@ -11,6 +11,7 @@
         ExpiredCoupon,
         WrongToken,
         EmailNotConfirmed,
-        WrongData
+        WrongData,
+        TourWithoutCommerce
     }
 }
