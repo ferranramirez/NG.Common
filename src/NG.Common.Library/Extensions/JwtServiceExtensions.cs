@@ -9,7 +9,7 @@ namespace NG.Common.Library.Extensions
 {
     public static class JwtServiceExtensions
     {
-        public static void AddJwtAuthentication2(
+        public static void AddJwtAuthentication(
             this IServiceCollection services,
             IConfiguration tokenSection)
         {
