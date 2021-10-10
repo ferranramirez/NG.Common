@@ -18,14 +18,19 @@ namespace NG.Common.Library.Extensions
             var ValidIssuer = string.Concat("https://securetoken.google.com/", validAudience);
 
             services
-                .AddAuthorization(options =>
-                {
-                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes("Bearer", "Firebase")
-                    .Build();
-                })
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer("Firebase", options =>
+                {
+                    options.Authority = ValidIssuer;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = ValidIssuer,
+                        ValidateAudience = true,
+                        ValidAudience = validAudience,
+                        ValidateLifetime = true
+                    };
+                })
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.RequireHttpsMetadata = false;
@@ -38,19 +43,19 @@ namespace NG.Common.Library.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-                })
-                .AddJwtBearer("Firebase", options =>
-                {
-                    options.Authority = ValidIssuer;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = ValidIssuer,
-                        ValidateAudience = true,
-                        ValidAudience = validAudience,
-                        ValidateLifetime = true
-                    };
                 });
+
+
+            services
+                .AddAuthorization(options =>
+                {
+                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes("Bearer", "Firebase")
+                    .Build();
+                })
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+
         }
     }
 }
