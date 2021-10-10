@@ -17,42 +17,40 @@ namespace NG.Common.Library.Extensions
             var validAudience = tokenSection.GetValue<string>("ValidAudience");
             var ValidIssuer = string.Concat("https://securetoken.google.com/", validAudience);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer("Custom", options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.ASCII.GetBytes(authKey)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            })
-            .AddJwtBearer("Firebase", options =>
-            {
-                options.Authority = ValidIssuer;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = ValidIssuer,
-                    ValidateAudience = true,
-                    ValidAudience = validAudience,
-                    ValidateLifetime = true
-                };
-            });
-
             services
                 .AddAuthorization(options =>
                 {
                     options.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes("Custom", "Firebase")
+                    .AddAuthenticationSchemes("Bearer", "Firebase")
                     .Build();
                 })
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes(authKey)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                })
+                .AddJwtBearer("Firebase", options =>
+                {
+                    options.Authority = ValidIssuer;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = ValidIssuer,
+                        ValidateAudience = true,
+                        ValidAudience = validAudience,
+                        ValidateLifetime = true
+                    };
+                });
         }
     }
 }
