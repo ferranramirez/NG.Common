@@ -13,7 +13,7 @@ namespace NG.Common.Services.AuthorizationProvider
 
         public AuthorizationProvider(IConfiguration configuration)
         {
-            _authKey = configuration.GetSection("Secrets").GetSection("AuthKey").Value;
+            _authKey = configuration.GetSection("Token").GetSection("AuthKey").Value;
         }
 
         public string GetToken(AuthorizedUser user)
